@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .todo-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 50px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .todo-item {
+        margin-bottom: 10px;
+    }
+    .todo-item input[type="checkbox"] {
+        margin-right: 10px;
+    }
+    .completed {
+        text-decoration: line-through;
+    }
+    .delete-btn {
+        background-color: #ff5050;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="todo-container">
+    <h2>Todo List</h2>
+    <input type="text" id="todoInput" placeholder="Enter task...">
+    <button id="addButton" onclick="addTodo">Add</button>
+    <div id="todoList"></div>
+</div>
+
+<script>
+    // Function to add a new todo
+    function addTodo() {
+        var input = document.querySelector("#todoInput");
+        var inputValue = input.value.trim();
+
+        if (inputValue === "") {
+            alert("Please enter a task!");
+            return;
+        }
+
+        var todoListDiv = document.querySelector("#todoList");
+        var listItem = document.createElement("div");
+        listItem.classList.add("todo-item");
+
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.addEventListener("change", toggleCompleted);
+
+        var textNode = document.createTextNode(inputValue);
+
+        var deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.classList.add("delete-btn");
+        deleteButton.addEventListener("click", deleteTodo);
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(textNode);
+        listItem.appendChild(deleteButton);
+
+        todoListDiv.appendChild(listItem);
+
+        // Clear input after adding todo
+        input.value = "";
+    }
+
+    // Function to toggle completed status
+    function toggleCompleted() {
+        var listItem = this.parentElement;
+        if (this.checked) {
+            listItem.classList.add("completed");
+        } else {
+            listItem.classList.remove("completed");
+        }
+    }
+
+    // Function to delete a todo
+    function deleteTodo() {
+        var listItem = this.parentElement;
+        listItem.remove();
+    }
+
+    // Event listener for adding todo
+    document.querySelector("#addButton").addEventListener("click", addTodo);
+</script>
+
+</body>
+</html>
